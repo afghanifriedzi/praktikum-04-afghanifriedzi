@@ -89,22 +89,99 @@ void tutupSemuaTab(CNode*& head) {
 
 // SOAL 1
 bool bukaHalaman(DNode*& head, DNode*& tail, int nomor) {
-    return false;
+    DNode* newNode = new DNode;
+    newNode->data = nomor;
+    newNode->next = nullptr;
+    newNode->prev = nullptr;
+
+    
+    if (head == nullptr) {
+        head = newNode;
+        tail = newNode;
+    } else {
+       
+        tail->next = newNode;
+        newNode->prev = tail;
+     
+        tail = newNode;
+    }
+    return true;
 }
 
 // SOAL 2
 int riwayatMundur(DNode* tail, int* keluaran) {
-    return 0;
+    int n = 0;
+    DNode* p = tail;
+    
+   
+    while (p != nullptr) {
+        keluaran[n] = p->data;
+        ++n;
+        p = p->prev; 
+    }
+    return n;
 }
 
 // SOAL 3
 bool hapusHalaman(DNode*& head, DNode*& tail, int nomor) {
+    DNode* p = head;
+    
+    while (p != nullptr) {
+        if (p->data == nomor) {
+           
+            if (p == head && p == tail) {
+                head = nullptr;
+                tail = nullptr;
+            } 
+           
+            else if (p == head) {
+                head = head->next;
+                head->prev = nullptr;
+            } 
+      
+            else if (p == tail) {
+                tail = tail->prev;
+                tail->next = nullptr;
+            } 
+            
+            else {
+                p->prev->next = p->next;
+                p->next->prev = p->prev;
+            }
+            
+            delete p;
+            return true;
+        }
+        p = p->next;
+    }
+    
+    // Jika tidak ditemukan
     return false;
 }
 
 // SOAL 4
 bool bukaTab(CNode*& head, int nomor) {
-    return false;
+    CNode* newNode = new CNode;
+    newNode->data = nomor;
+    
+    
+    if (head == nullptr) {
+        head = newNode;
+        newNode->next = head; 
+    } else {
+        
+        CNode* temp = head;
+        while (temp->next != head) {
+            temp = temp->next;
+        }
+        
+       
+        temp->next = newNode;
+        
+        newNode->next = head;
+    }
+    
+    return true;
 }
 
 // =============================================================================
